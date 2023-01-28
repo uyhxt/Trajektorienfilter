@@ -1,4 +1,3 @@
-#skelet verknuepfung zum jeweiligen frame, ebenfalls
 #datenaufbreitung: merging der zerteilten trajektorienzu Trajektorie mit 1799 frames an daten
 import csv
 import matplotlib.pyplot as plt
@@ -11,7 +10,8 @@ allPeople = []
 n = []
 i = 0
 
-joints_coords_within_frame = np.zeros((32,3),dtype=np.float32) #np.empty((32,3))
+#joints_coords_within_frame = np.zeros((32,3),dtype=np.float32) #np.empty((32,3))
+joints_coords_within_frame = np.zeros((32,3))
 skeleton_over_all_frames = []
 
 x_max = 7
@@ -29,7 +29,7 @@ with open('D:/Studium/WS22/Konfigurationen Datensets/Usable sequences/BestBatch/
             point_position.append((float(row[5]) - float(row[10]))*np.cos(2*np.pi*float(row[15])/360))
             point_position.append((float(row[6]) - float(row[11]))*np.sin(2*np.pi*float(row[15])/360))
             point_position.append((float(row[7]) - float(row[12])))    
-            joints_coords_within_frame[14] = point_position    
+            joints_coords_within_frame[14] = point_position 
         elif row[2] == '1' and len(n) == (int(row[0])-1) and int(row[0]) > 0:
             point_position.append((float(row[5]) - float(row[10]))*np.cos(2*np.pi*float(row[15])/360))
             point_position.append((float(row[6]) - float(row[11]))*np.sin(2*np.pi*float(row[15])/360)) 
@@ -137,22 +137,21 @@ with open('D:/Studium/WS22/Konfigurationen Datensets/Usable sequences/BestBatch/
             joints_coords_within_frame[10] = point_position   
         
         if row[2] == '21' and len(n) == (int(row[0])-1) and int(row[0]) > 0:
-            joints_coords_within_frame[3] = [0.0,0.0,0.0]
-            joints_coords_within_frame[4] = [0.0,0.0,0.0]
-            joints_coords_within_frame[8] = [0.0,0.0,0.0]
-            joints_coords_within_frame[9] = [0.0,0.0,0.0]
-            joints_coords_within_frame[15] = [0.0,0.0,0.0]
-            joints_coords_within_frame[19] = [0.0,0.0,0.0]
-            joints_coords_within_frame[20] = [0.0,0.0,0.0]
-            joints_coords_within_frame[21] = [0.0,0.0,0.0]
-            joints_coords_within_frame[22] = [0.0,0.0,0.0]
-            joints_coords_within_frame[23] = [0.0,0.0,0.0]
-            joints_coords_within_frame[27] = [0.0,0.0,0.0]
-            joints_coords_within_frame[28] = [0.0,0.0,0.0]
-            joints_coords_within_frame[29] = [0.0,0.0,0.0]
-            joints_coords_within_frame[30] = [0.0,0.0,0.0]
-            joints_coords_within_frame[31] = [0.0,0.0,0.0]
-
+            #joints_coords_within_frame[3] = [0.0,0.0,0.0]
+            #joints_coords_within_frame[4] = [0.0,0.0,0.0]
+            #joints_coords_within_frame[8] = [0.0,0.0,0.0]
+            #joints_coords_within_frame[9] = [0.0,0.0,0.0]
+            #joints_coords_within_frame[15] = [0.0,0.0,0.0]
+            #joints_coords_within_frame[19] = [0.0,0.0,0.0]
+            #joints_coords_within_frame[20] = [0.0,0.0,0.0]
+            #joints_coords_within_frame[21] = [0.0,0.0,0.0]
+            #joints_coords_within_frame[22] = [0.0,0.0,0.0]
+            #joints_coords_within_frame[23] = [0.0,0.0,0.0]
+            #joints_coords_within_frame[27] = [0.0,0.0,0.0]
+            #joints_coords_within_frame[28] = [0.0,0.0,0.0]
+            #joints_coords_within_frame[29] = [0.0,0.0,0.0]
+            #joints_coords_within_frame[30] = [0.0,0.0,0.0]
+            #joints_coords_within_frame[31] = [0.0,0.0,0.0]
             skeleton_over_all_frames.append(joints_coords_within_frame)
 
         if row[2] == '12' and len(n) == (int(row[0])-1) and int(row[0]) > 0:
@@ -167,17 +166,13 @@ with open('D:/Studium/WS22/Konfigurationen Datensets/Usable sequences/BestBatch/
     personPosX = []
     personPosY = []
     personIDs  = []
-    r = 0
-
     skeletons_within_a_frame = []
-    
+    r = 0
     for k in range(len(n)):
         personPosX.append(personPosXinit[r:r+n[k]])
         personPosY.append(personPosYinit[r:r+n[k]])
         personIDs.append(personIDsInit[r:r+n[k]])
-
         skeletons_within_a_frame.append(skeleton_over_all_frames[r:r+n[k]])
-
         r += n[k]
 
     for k in range(len(personIDs)):
@@ -187,30 +182,30 @@ with open('D:/Studium/WS22/Konfigurationen Datensets/Usable sequences/BestBatch/
 
     id_position_pairs = []
     allPositions = []
-
     allSkeletons = []
-
     jump_in_arrays = []
     NUM_COLORS = 20
     cm = plt.get_cmap('tab20')
     fig = plt.figure()
     ax = fig.add_subplot(111)
     ax.set_prop_cycle(color=[cm(1.*i/NUM_COLORS) for i in range(NUM_COLORS)])
+
+    print("All People:",allPeople)
+
     for l in range(len(allPeople)):
         sortedPositionX = []
         sortedPositionY = []
-
         sorted_skeletons_within_a_frame = []
-
         frame_numbers = []
         for f in range(len(personPosX)):
             if l < len(personPosX[f]):
                 if personPosY[f][l] < y_max and personPosY[f][l] > y_min and personPosX[f][l] > x_min and personPosX[f][l] < x_max:
                     sortedPositionX.append(personPosX[f][l])
                     sortedPositionY.append(personPosY[f][l])
-
+                    #
+                    #print(l, f, len(skeletons_within_a_frame),len(skeletons_within_a_frame[f]),len(skeletons_within_a_frame[f][l]))
                     sorted_skeletons_within_a_frame.append(skeletons_within_a_frame[f][l])
-
+                    #
                     frame_numbers.append(f)
 
         if len(frame_numbers) != 0:        
@@ -237,9 +232,7 @@ with open('D:/Studium/WS22/Konfigurationen Datensets/Usable sequences/BestBatch/
             positions.append(sortedPositionX)
             positions.append(sortedPositionY)
             allPositions.append(positions)
-
             allSkeletons.append(sorted_skeletons_within_a_frame)
-
             jump_in_arrays.append(jump_in_array_index)
             
     plt.legend()
@@ -299,9 +292,7 @@ with open('D:/Studium/WS22/Konfigurationen Datensets/Usable sequences/BestBatch/
                                                        id_position_pairs[l][1][k+1],
                                                        allPositions[l][0][jump_in_arrays[l][k]:jump_in_arrays[l][k+1]],
                                                        allPositions[l][1][jump_in_arrays[l][k]:jump_in_arrays[l][k+1]],
-
                                                        allSkeletons[l][jump_in_arrays[l][k]:jump_in_arrays[l][k+1]],
-
                                                        id_position_pairs[l][0] + " " + str(k),
                                                        list_index_key))
                     print("Jumps Node:",k,k+1,jump_in_arrays[l][k],jump_in_arrays[l][k+1],id_position_pairs[l][0] + " " + str(k))
@@ -311,9 +302,7 @@ with open('D:/Studium/WS22/Konfigurationen Datensets/Usable sequences/BestBatch/
                                                    id_position_pairs[l][1][1],
                                                    allPositions[l][0][jump_in_arrays[l][0]:jump_in_arrays[l][1]],
                                                    allPositions[l][1][jump_in_arrays[l][0]:jump_in_arrays[l][1]],
-
                                                    allSkeletons[l][jump_in_arrays[l][0]:jump_in_arrays[l][1]],
-
                                                    id_position_pairs[l][0] + " " + str(1),
                                                    list_index_key))
                 print("Jumps Node:",0,1,jump_in_arrays[l][0],jump_in_arrays[l][1],id_position_pairs[l][0] + " " + str(1))
@@ -347,9 +336,7 @@ with open('D:/Studium/WS22/Konfigurationen Datensets/Usable sequences/BestBatch/
 
 
     from mpl_toolkits import mplot3d
-
     complete_data = []
-
     for l in range(len(id_position_pairs)):
         if id_position_pairs[l][1][0] == 0:                                                                                                             #only take routes that begin with the frame 0        
             if len(id_position_pairs[l][1])>2:
@@ -359,19 +346,15 @@ with open('D:/Studium/WS22/Konfigurationen Datensets/Usable sequences/BestBatch/
                 total_appended_length = 0
                 complete_trajectory_x = []
                 complete_trajectory_y = []
-
                 complete_skeleton_trajectory = []
-
                 #
                 for k in range(0,len(id_position_pairs[l][1])-2,2):
-                    list_index_key = len(set_of_available_nodes)    
+                    list_index_key = len(set_of_available_nodes) 
                     start_node = node(id_position_pairs[l][1][k],
                                       id_position_pairs[l][1][k+1],
                                       allPositions[l][0][jump_in_arrays[l][k]:jump_in_arrays[l][k+1]],
                                       allPositions[l][1][jump_in_arrays[l][k]:jump_in_arrays[l][k+1]],
-
                                       allSkeletons[l][jump_in_arrays[l][k]:jump_in_arrays[l][k+1]],
-
                                       id_position_pairs[l][0] + " " + str(k),
                                       list_index_key)
                     set_of_available_nodes.append(start_node)
@@ -381,9 +364,7 @@ with open('D:/Studium/WS22/Konfigurationen Datensets/Usable sequences/BestBatch/
                                       id_position_pairs[l][1][k+3],
                                       allPositions[l][0][jump_in_arrays[l][k+2]:jump_in_arrays[l][k+3]],
                                       allPositions[l][1][jump_in_arrays[l][k+2]:jump_in_arrays[l][k+3]],
-
                                       allSkeletons[l][jump_in_arrays[l][k+2]:jump_in_arrays[l][k+3]],
-
                                       id_position_pairs[l][0] + " " + str(k),
                                       list_index_key)
                     set_of_available_nodes.append(end_node)
@@ -400,27 +381,28 @@ with open('D:/Studium/WS22/Konfigurationen Datensets/Usable sequences/BestBatch/
                     #arrays concatenaten & jump locations neu setzen & in scatter graph plotten
                     gap_filler_x = []
                     gap_filler_y = []
-
                     gap_filler_skeleton = []
-
                     for x in range(len(path)):
                         gap_node = path[x]
                         coordinates = gap_node.return_coordinates()
                         gap_filler_x += coordinates[0]
                         gap_filler_y += coordinates[1]
-
                         gap_filler_skeleton += coordinates[2]
 
                     total_appended_length += len(gap_filler_x)
-                    complete_trajectory_x = allPositions[l][0][jump_in_arrays[l][k]+total_appended_length : jump_in_arrays[l][k+1]+total_appended_length] + gap_filler_x + allPositions[l][0][jump_in_arrays[l][k+2]+total_appended_length : jump_in_arrays[l][k+3]+total_appended_length]
-                    complete_trajectory_y = allPositions[l][1][jump_in_arrays[l][k]+total_appended_length : jump_in_arrays[l][k+1]+total_appended_length] + gap_filler_y + allPositions[l][1][jump_in_arrays[l][k+2]+total_appended_length : jump_in_arrays[l][k+3]+total_appended_length]
-                
-                    complete_skeleton_trajectory = allSkeletons[l][jump_in_arrays[l][k]+total_appended_length : jump_in_arrays[l][k+1]+total_appended_length] + gap_filler_skeleton + allSkeletons[l][jump_in_arrays[l][k+2]+total_appended_length : jump_in_arrays[l][k+3]+total_appended_length]
+                    complete_trajectory_x = allPositions[l][0][(jump_in_arrays[l][k]+total_appended_length) : (jump_in_arrays[l][k+1]+total_appended_length)] + gap_filler_x + allPositions[l][0][(jump_in_arrays[l][k+2]+total_appended_length) : (jump_in_arrays[l][k+3]+total_appended_length)]
+                    complete_trajectory_y = allPositions[l][1][(jump_in_arrays[l][k]+total_appended_length) : (jump_in_arrays[l][k+1]+total_appended_length)] + gap_filler_y + allPositions[l][1][(jump_in_arrays[l][k+2]+total_appended_length) : (jump_in_arrays[l][k+3]+total_appended_length)]
+                    
+
+                    #das hier umändern die concatenation funktioniert nicht wie gewollt
+                    #print(" ")
+                    print(len(complete_skeleton_trajectory),len(gap_filler_skeleton))
+                    print(allSkeletons[l][jump_in_arrays[l][k]+total_appended_length : jump_in_arrays[l][k+1]+total_appended_length])
+                    #print(gap_filler_skeleton)
+                    complete_skeleton_trajectory = allSkeletons[l][(jump_in_arrays[l][k]+total_appended_length) : (jump_in_arrays[l][k+1]+total_appended_length)] + gap_filler_skeleton + allSkeletons[l][(jump_in_arrays[l][k+2]+total_appended_length) : (jump_in_arrays[l][k+3]+total_appended_length)]
 
                 complete_data.append(complete_skeleton_trajectory)
-
                 print(len(complete_skeleton_trajectory),len(complete_skeleton_trajectory[0]),len(complete_skeleton_trajectory[0][0]))
-
                 #plt.scatter(complete_trajectory_x,complete_trajectory_y,label=id_position_pairs[l][0]) 
                 
                 complete_skeleton_trajectory_x = []
@@ -435,7 +417,7 @@ with open('D:/Studium/WS22/Konfigurationen Datensets/Usable sequences/BestBatch/
                 #plt.scatter(complete_skeleton_trajectory[:][:][0],complete_skeleton_trajectory[:][:][1],complete_skeleton_trajectory[:][:][2],label=id_position_pairs[l][0])
                 #plt.scatter(complete_skeleton_trajectory_x,complete_skeleton_trajectory_y,complete_skeleton_trajectory_z,label=id_position_pairs[l][0])
                 ax = plt.axes(projection ="3d")
-                ax.scatter3D(complete_skeleton_trajectory_x,complete_skeleton_trajectory_y,complete_skeleton_trajectory_z,label=id_position_pairs[l][0])
+                ax.scatter(complete_skeleton_trajectory_x,complete_skeleton_trajectory_y,complete_skeleton_trajectory_z,label=id_position_pairs[l][0])
                 
                 plt.legend()
                 plt.show()  
@@ -447,9 +429,7 @@ with open('D:/Studium/WS22/Konfigurationen Datensets/Usable sequences/BestBatch/
                                   id_position_pairs[l][1][1],
                                   allPositions[l][0][jump_in_arrays[l][0]:jump_in_arrays[l][1]],
                                   allPositions[l][1][jump_in_arrays[l][0]:jump_in_arrays[l][1]],
-
                                   allSkeletons[l][jump_in_arrays[l][0]:jump_in_arrays[l][1]],
-
                                   id_position_pairs[l][0] + " " + str(1),
                                   list_index_key)
                 set_of_available_nodes.append(start_node)
@@ -459,9 +439,7 @@ with open('D:/Studium/WS22/Konfigurationen Datensets/Usable sequences/BestBatch/
                                   1799,
                                   allPositions[l][0][jump_in_arrays[l][0]:jump_in_arrays[l][1]],
                                   allPositions[l][1][jump_in_arrays[l][0]:jump_in_arrays[l][1]],
-
                                   allSkeletons[l][jump_in_arrays[l][0]:jump_in_arrays[l][1]],
-
                                   id_position_pairs[l][0] + " " + str(1),
                                   list_index_key)
                 set_of_available_nodes.append(end_node)
@@ -476,23 +454,18 @@ with open('D:/Studium/WS22/Konfigurationen Datensets/Usable sequences/BestBatch/
 
                 gap_filler_x = []
                 gap_filler_y = []
-
                 gap_filler_skeleton = []
-
                 for x in range(len(path)):
                     gap_node = path[x]
                     coordinates = gap_node.return_coordinates()
                     gap_filler_x += coordinates[0]
                     gap_filler_y += coordinates[1]
-
                     gap_filler_skeleton += coordinates[2]
 
                 #arrays concatenaten & in scatter graph plotten 
                 complete_trajectory_x = allPositions[l][0][jump_in_arrays[l][0]:jump_in_arrays[l][1]] + gap_filler_x 
                 complete_trajectory_y = allPositions[l][1][jump_in_arrays[l][0]:jump_in_arrays[l][1]] + gap_filler_y
-
                 complete_skeleton_trajectory = allSkeletons[l][jump_in_arrays[l][0]:jump_in_arrays[l][1]] + gap_filler_skeleton
-
                 complete_data.append(complete_skeleton_trajectory)
 
                 #plt.scatter(complete_trajectory_x,complete_trajectory_y,label=id_position_pairs[l][0]) 
@@ -507,7 +480,6 @@ with open('D:/Studium/WS22/Konfigurationen Datensets/Usable sequences/BestBatch/
                         complete_skeleton_trajectory_x.append(complete_skeleton_trajectory[h][g][0])
                         complete_skeleton_trajectory_y.append(complete_skeleton_trajectory[h][g][1])
                         complete_skeleton_trajectory_z.append(complete_skeleton_trajectory[h][g][2])
-
                 ax = plt.axes(projection ="3d")
                 ax.scatter3D(complete_skeleton_trajectory_x,complete_skeleton_trajectory_y,complete_skeleton_trajectory_z,label=id_position_pairs[l][0])
 
