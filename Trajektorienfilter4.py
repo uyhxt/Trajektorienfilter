@@ -27,7 +27,7 @@ def store_data(complete_data):
     sys.stdout.close()           
 
 
-def calc_number_of_skeletons(sequence_number,limitations):
+def calc_number_of_skeletons(sequence_number):
     g = 0
     with open('D:/Studium/WS22/Konfigurationen Datensets/Usable sequences/BestBatch/seq_' + str(sequence_number) +'/coords.csv') as dataFile:
         heading = next(dataFile)
@@ -524,12 +524,16 @@ def calc_skeleton_sequences(sequence_number,ROI_limitations):
                         gap_filler_x = []
                         gap_filler_y = []
                         gap_filler_skeleton = []
-                        for x in range(len(path)):
-                            gap_node = path[x]
-                            coordinates = gap_node.return_coordinates()
-                            gap_filler_x += coordinates[0]
-                            gap_filler_y += coordinates[1]
-                            gap_filler_skeleton += coordinates[2]
+                        
+                        ###########################################################################
+                        if path != None:
+                            for x in range(len(path)):
+                                gap_node = path[x]
+                                coordinates = gap_node.return_coordinates()
+                                gap_filler_x += coordinates[0]
+                                gap_filler_y += coordinates[1]
+                                gap_filler_skeleton += coordinates[2]
+                        ##########################################################################
 
                         total_appended_length += len(gap_filler_x)
                         complete_trajectory_x = allPositions[l][0][(jump_in_arrays[l][k]+total_appended_length) : (jump_in_arrays[l][k+1]+total_appended_length)] + gap_filler_x + allPositions[l][0][(jump_in_arrays[l][k+2]+total_appended_length) : (jump_in_arrays[l][k+3]+total_appended_length)]
@@ -539,7 +543,7 @@ def calc_skeleton_sequences(sequence_number,ROI_limitations):
                         #das hier umändern die concatenation funktioniert nicht wie gewollt
                         #print(" ")
                         print(len(complete_skeleton_trajectory),len(gap_filler_skeleton))
-                        print(allSkeletons[l][jump_in_arrays[l][k]+total_appended_length : jump_in_arrays[l][k+1]+total_appended_length])
+                        #print(allSkeletons[l][jump_in_arrays[l][k]+total_appended_length : jump_in_arrays[l][k+1]+total_appended_length])
                         #print(gap_filler_skeleton)
                         complete_skeleton_trajectory = allSkeletons[l][(jump_in_arrays[l][k]+total_appended_length) : (jump_in_arrays[l][k+1]+total_appended_length)] + gap_filler_skeleton + allSkeletons[l][(jump_in_arrays[l][k+2]+total_appended_length) : (jump_in_arrays[l][k+3]+total_appended_length)]
 
@@ -599,12 +603,16 @@ def calc_skeleton_sequences(sequence_number,ROI_limitations):
                     gap_filler_x = []
                     gap_filler_y = []
                     gap_filler_skeleton = []
-                    for x in range(len(path)):
-                        gap_node = path[x]
-                        coordinates = gap_node.return_coordinates()
-                        gap_filler_x += coordinates[0]
-                        gap_filler_y += coordinates[1]
-                        gap_filler_skeleton += coordinates[2]
+
+                    ####################################################################
+                    if path != None:
+                        for x in range(len(path)):
+                            gap_node = path[x]
+                            coordinates = gap_node.return_coordinates()
+                            gap_filler_x += coordinates[0]
+                            gap_filler_y += coordinates[1]
+                            gap_filler_skeleton += coordinates[2]
+                    ###################################################################
 
                     #arrays concatenaten & in scatter graph plotten 
                     complete_trajectory_x = allPositions[l][0][jump_in_arrays[l][0]:jump_in_arrays[l][1]] + gap_filler_x 
@@ -639,18 +647,24 @@ def calc_skeleton_sequences(sequence_number,ROI_limitations):
 if __name__ == "__main__":
     #joints_coords_within_frame = np.zeros((32,3),dtype=np.float32) #np.empty((32,3))
     #skeleton_over_all_frames = []
-    
     #sequence_number = 70
-
     #x_max = 7
     #x_min = -9
     #y_max = 0
     #y_min = -8
 
-    totalNumberOfSequences = 150
+    trainingData = []
+    totalNumberOfSequences = 82
     limitations = np.zeros((totalNumberOfSequences,4))
+    
+    for sequence in range(totalNumberOfSequences):
+        limitations[sequence] = (float('inf'),float('-inf'),float('inf'),float('-inf'))
+
     for sequenceNumber in range(totalNumberOfSequences):
-        totalNumSkeletons = calc_number_of_skeletons(sequenceNumber,limitations[sequenceNumber])
+        totalNumSkeletons = calc_number_of_skeletons(sequenceNumber)
         skeleton_over_all_frames = np.zeros((totalNumSkeletons,32,3))
-        completeDataSequence = calc_skeleton_sequences()
-    store_data()
+        completeDataSequence = calc_skeleton_sequences(sequenceNumber,limitations[sequenceNumber])
+        for personData in range(len(completeDataSequence)):
+            trainingData.append(completeDataSequence[personData])
+            print("Sequence",sequenceNumber,":",len(completeDataSequence[personData]),len(completeDataSequence[personData][0]),len(completeDataSequence[personData][0][0]))
+    store_data(trainingData)
