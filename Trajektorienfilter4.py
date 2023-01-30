@@ -12,19 +12,36 @@ i = 0
 
 #joints_coords_within_frame = np.zeros((32,3),dtype=np.float32) #np.empty((32,3))
 joints_coords_within_frame = np.zeros((32,3))
-skeleton_over_all_frames = []
+#skeleton_over_all_frames = []
+
+sequence_number = 70
+complete_data = []
+
+######### das hier verschieben 
+g = 0
+with open('D:/Studium/WS22/Konfigurationen Datensets/Usable sequences/BestBatch/seq_' + str(sequence_number) +'/coords.csv') as dataFile:
+    heading = next(dataFile)
+    readData = csv.reader(dataFile)
+    for row in readData:
+        g += 1
+#skeleton_over_all_frames = np.zeros((15811,32,3))
+skeleton_over_all_frames = np.zeros((g,32,3))
+#z = 0
+#######
+z = 0
 
 x_max = 7
 x_min = -9
 y_max = 0
 y_min = -8
 
-with open('D:/Studium/WS22/Konfigurationen Datensets/Usable sequences/BestBatch/seq_70/coords.csv') as dataFile:
+with open('D:/Studium/WS22/Konfigurationen Datensets/Usable sequences/BestBatch/seq_' + str(sequence_number) + '/coords.csv') as dataFile:
     heading = next(dataFile)
     readData = csv.reader(dataFile)
     for row in readData:
         
         point_position = []
+        '''
         if row[2] == '0' and len(n) == (int(row[0])-1) and int(row[0]) > 0:
             point_position.append((float(row[5]) - float(row[10]))*np.cos(2*np.pi*float(row[15])/360))
             point_position.append((float(row[6]) - float(row[11]))*np.sin(2*np.pi*float(row[15])/360))
@@ -135,8 +152,109 @@ with open('D:/Studium/WS22/Konfigurationen Datensets/Usable sequences/BestBatch/
             point_position.append((float(row[6]) - float(row[11]))*np.sin(2*np.pi*float(row[15])/360))
             point_position.append((float(row[7]) - float(row[12])))    
             joints_coords_within_frame[10] = point_position   
-        
+        '''
+        if row[2] == '0' and len(n) == (int(row[0])-1) and int(row[0]) > 0:
+            joints_coords_within_frame[14][0] = (float(row[5]) - float(row[10]))*np.cos(2*np.pi*float(row[15])/360) 
+            joints_coords_within_frame[14][1] = (float(row[6]) - float(row[11]))*np.sin(2*np.pi*float(row[15])/360)
+            joints_coords_within_frame[14][2] = (float(row[7]) - float(row[12]))     
+        elif row[2] == '1' and len(n) == (int(row[0])-1) and int(row[0]) > 0:
+            joints_coords_within_frame[13][0] = (float(row[5]) - float(row[10]))*np.cos(2*np.pi*float(row[15])/360)
+            joints_coords_within_frame[13][1] = (float(row[6]) - float(row[11]))*np.sin(2*np.pi*float(row[15])/360)
+            joints_coords_within_frame[13][2] = (float(row[7]) - float(row[12]))      
+        elif row[2] == '2' and len(n) == (int(row[0])-1) and int(row[0]) > 0:
+            joints_coords_within_frame[12][0] = (float(row[5]) - float(row[10]))*np.cos(2*np.pi*float(row[15])/360)
+            joints_coords_within_frame[12][1] = (float(row[6]) - float(row[11]))*np.sin(2*np.pi*float(row[15])/360)
+            joints_coords_within_frame[12][2] = (float(row[7]) - float(row[12]))
+            '''
+        elif row[2] == '3' and len(n) == (int(row[0])-1) and int(row[0]) > 0:
+            point_position.append((float(row[5]) - float(row[10]))*np.cos(2*np.pi*float(row[15])/360))
+            point_position.append((float(row[6]) - float(row[11]))*np.sin(2*np.pi*float(row[15])/360))
+            point_position.append((float(row[7]) - float(row[12])))
+            #joints_coords_within_frame[14] = point_position   
+        '''     
+        elif row[2] == '4' and len(n) == (int(row[0])-1) and int(row[0]) > 0:
+            joints_coords_within_frame[24][0] = (float(row[5]) - float(row[10]))*np.cos(2*np.pi*float(row[15])/360)
+            joints_coords_within_frame[24][1] = (float(row[6]) - float(row[11]))*np.sin(2*np.pi*float(row[15])/360)
+            joints_coords_within_frame[24][2] = (float(row[7]) - float(row[12]))     
+        elif row[2] == '5' and len(n) == (int(row[0])-1) and int(row[0]) > 0:
+            joints_coords_within_frame[25][0] = (float(row[5]) - float(row[10]))*np.cos(2*np.pi*float(row[15])/360)
+            joints_coords_within_frame[25][1] = (float(row[6]) - float(row[11]))*np.sin(2*np.pi*float(row[15])/360)
+            joints_coords_within_frame[25][2] = (float(row[7]) - float(row[12]))
+        elif row[2] == '6' and len(n) == (int(row[0])-1) and int(row[0]) > 0:
+            joints_coords_within_frame[26][0] = (float(row[5]) - float(row[10]))*np.cos(2*np.pi*float(row[15])/360)
+            joints_coords_within_frame[26][1] = (float(row[6]) - float(row[11]))*np.sin(2*np.pi*float(row[15])/360)
+            joints_coords_within_frame[26][2] = (float(row[7]) - float(row[12]))      
+            '''
+        elif row[2] == '7' and len(n) == (int(row[0])-1) and int(row[0]) > 0:
+            point_position.append((float(row[5]) - float(row[10]))*np.cos(2*np.pi*float(row[15])/360))
+            point_position.append((float(row[6]) - float(row[11]))*np.sin(2*np.pi*float(row[15])/360))
+            point_position.append((float(row[7]) - float(row[12]))) 
+            #joints_coords_within_frame[14] = point_position 
+        '''     
+        elif row[2] == '8' and len(n) == (int(row[0])-1) and int(row[0]) > 0:
+            joints_coords_within_frame[16][0] = (float(row[5]) - float(row[10]))*np.cos(2*np.pi*float(row[15])/360)
+            joints_coords_within_frame[16][1] = (float(row[6]) - float(row[11]))*np.sin(2*np.pi*float(row[15])/360)
+            joints_coords_within_frame[16][2] = (float(row[7]) - float(row[12])) 
+        elif row[2] == '9' and len(n) == (int(row[0])-1) and int(row[0]) > 0:
+            joints_coords_within_frame[17][0] = (float(row[5]) - float(row[10]))*np.cos(2*np.pi*float(row[15])/360)
+            joints_coords_within_frame[17][1] = (float(row[6]) - float(row[11]))*np.sin(2*np.pi*float(row[15])/360)
+            joints_coords_within_frame[17][2] = (float(row[7]) - float(row[12]))    
+        elif row[2] == '10' and len(n) == (int(row[0])-1) and int(row[0]) > 0:
+            joints_coords_within_frame[18][0] = (float(row[5]) - float(row[10]))*np.cos(2*np.pi*float(row[15])/360)
+            joints_coords_within_frame[18][1] = (float(row[6]) - float(row[11]))*np.sin(2*np.pi*float(row[15])/360)
+            joints_coords_within_frame[18][2] = (float(row[7]) - float(row[12]))       
+        elif row[2] == '11' and len(n) == (int(row[0])-1) and int(row[0]) > 0:
+            joints_coords_within_frame[11][0] = (float(row[5]) - float(row[10]))*np.cos(2*np.pi*float(row[15])/360)
+            joints_coords_within_frame[11][1] = (float(row[6]) - float(row[11]))*np.sin(2*np.pi*float(row[15])/360)
+            joints_coords_within_frame[11][2] = (float(row[7]) - float(row[12])) 
+            '''
+        elif row[2] == '12' and len(n) == (int(row[0])-1) and int(row[0]) > 0:
+            point_position.append((float(row[5]) - float(row[10]))*np.cos(2*np.pi*float(row[15])/360))
+            point_position.append((float(row[6]) - float(row[11]))*np.sin(2*np.pi*float(row[15])/360))
+            point_position.append((float(row[7]) - float(row[12])))    
+            #joints_coords_within_frame[11] = point_position 
+        elif row[2] == '13' and len(n) == (int(row[0])-1) and int(row[0]) > 0:
+            point_position.append((float(row[5]) - float(row[10]))*np.cos(2*np.pi*float(row[15])/360))
+            point_position.append((float(row[6]) - float(row[11]))*np.sin(2*np.pi*float(row[15])/360))
+            point_position.append((float(row[7]) - float(row[12]))) 
+            #joints_coords_within_frame[11] = point_position      
+        elif row[2] == '14' and len(n) == (int(row[0])-1) and int(row[0]) > 0:
+            point_position.append((float(row[5]) - float(row[10]))*np.cos(2*np.pi*float(row[15])/360))
+            point_position.append((float(row[6]) - float(row[11]))*np.sin(2*np.pi*float(row[15])/360))
+            point_position.append((float(row[7]) - float(row[12])))        
+            #joints_coords_within_frame[11] = point_position
+        '''  
+        elif row[2] == '15' and len(n) == (int(row[0])-1) and int(row[0]) > 0:
+            joints_coords_within_frame[0][0] = (float(row[5]) - float(row[10]))*np.cos(2*np.pi*float(row[15])/360)
+            joints_coords_within_frame[0][1] = (float(row[6]) - float(row[11]))*np.sin(2*np.pi*float(row[15])/360)
+            joints_coords_within_frame[0][2] = (float(row[7]) - float(row[12]))     
+        elif row[2] == '16' and len(n) == (int(row[0])-1) and int(row[0]) > 0:
+            joints_coords_within_frame[1][0] = (float(row[5]) - float(row[10]))*np.cos(2*np.pi*float(row[15])/360)
+            joints_coords_within_frame[1][1] = (float(row[6]) - float(row[11]))*np.sin(2*np.pi*float(row[15])/360)
+            joints_coords_within_frame[1][2] = (float(row[7]) - float(row[12]))      
+        elif row[2] == '17' and len(n) == (int(row[0])-1) and int(row[0]) > 0:
+            joints_coords_within_frame[2][0] = (float(row[5]) - float(row[10]))*np.cos(2*np.pi*float(row[15])/360)
+            joints_coords_within_frame[2][1] = (float(row[6]) - float(row[11]))*np.sin(2*np.pi*float(row[15])/360)
+            joints_coords_within_frame[2][2] = (float(row[7]) - float(row[12]))    
+        elif row[2] == '18' and len(n) == (int(row[0])-1) and int(row[0]) > 0:
+            joints_coords_within_frame[5][0] = (float(row[5]) - float(row[10]))*np.cos(2*np.pi*float(row[15])/360)
+            joints_coords_within_frame[5][1] = (float(row[6]) - float(row[11]))*np.sin(2*np.pi*float(row[15])/360)
+            joints_coords_within_frame[5][2] = (float(row[7]) - float(row[12])) 
+        elif row[2] == '19' and len(n) == (int(row[0])-1) and int(row[0]) > 0:
+            joints_coords_within_frame[6][0] = (float(row[5]) - float(row[10]))*np.cos(2*np.pi*float(row[15])/360)
+            joints_coords_within_frame[6][1] = (float(row[6]) - float(row[11]))*np.sin(2*np.pi*float(row[15])/360)
+            joints_coords_within_frame[6][2] = (float(row[7]) - float(row[12]))  
+        elif row[2] == '20' and len(n) == (int(row[0])-1) and int(row[0]) > 0:
+            joints_coords_within_frame[7][0] = (float(row[5]) - float(row[10]))*np.cos(2*np.pi*float(row[15])/360)
+            joints_coords_within_frame[7][1] = (float(row[6]) - float(row[11]))*np.sin(2*np.pi*float(row[15])/360)
+            joints_coords_within_frame[7][2] = (float(row[7]) - float(row[12]))   
+        elif row[2] == '21' and len(n) == (int(row[0])-1) and int(row[0]) > 0:
+            joints_coords_within_frame[10][0] = (float(row[5]) - float(row[10]))*np.cos(2*np.pi*float(row[15])/360)
+            joints_coords_within_frame[10][1] = (float(row[6]) - float(row[11]))*np.sin(2*np.pi*float(row[15])/360)
+            joints_coords_within_frame[10][2] = (float(row[7]) - float(row[12]))  
+
         if row[2] == '21' and len(n) == (int(row[0])-1) and int(row[0]) > 0:
+            '''
             #joints_coords_within_frame[3] = [0.0,0.0,0.0]
             #joints_coords_within_frame[4] = [0.0,0.0,0.0]
             #joints_coords_within_frame[8] = [0.0,0.0,0.0]
@@ -152,8 +270,10 @@ with open('D:/Studium/WS22/Konfigurationen Datensets/Usable sequences/BestBatch/
             #joints_coords_within_frame[29] = [0.0,0.0,0.0]
             #joints_coords_within_frame[30] = [0.0,0.0,0.0]
             #joints_coords_within_frame[31] = [0.0,0.0,0.0]
-            skeleton_over_all_frames.append(joints_coords_within_frame)
-
+            '''
+            #skeleton_over_all_frames.append(joints_coords_within_frame)
+            skeleton_over_all_frames[z] = joints_coords_within_frame
+            z += 1
         if row[2] == '12' and len(n) == (int(row[0])-1) and int(row[0]) > 0:
             personPosXinit.append((float(row[5]) - float(row[10]))*np.cos(2*np.pi*float(row[15])/360))
             personPosYinit.append((float(row[6]) - float(row[11]))*np.sin(2*np.pi*float(row[15])/360))         
@@ -172,7 +292,14 @@ with open('D:/Studium/WS22/Konfigurationen Datensets/Usable sequences/BestBatch/
         personPosX.append(personPosXinit[r:r+n[k]])
         personPosY.append(personPosYinit[r:r+n[k]])
         personIDs.append(personIDsInit[r:r+n[k]])
-        skeletons_within_a_frame.append(skeleton_over_all_frames[r:r+n[k]])
+        
+        temp_skeleton_in_frame = []
+        for b in range(n[k]):
+            oe = r+b
+            temp_skeleton_in_frame.append(skeleton_over_all_frames[oe])
+            #print(skeleton_over_all_frames[oe])
+        skeletons_within_a_frame.append(temp_skeleton_in_frame)
+        #print(skeletons_within_a_frame[k])
         r += n[k]
 
     for k in range(len(personIDs)):
@@ -190,8 +317,6 @@ with open('D:/Studium/WS22/Konfigurationen Datensets/Usable sequences/BestBatch/
     ax = fig.add_subplot(111)
     ax.set_prop_cycle(color=[cm(1.*i/NUM_COLORS) for i in range(NUM_COLORS)])
 
-    print("All People:",allPeople)
-
     for l in range(len(allPeople)):
         sortedPositionX = []
         sortedPositionY = []
@@ -202,10 +327,7 @@ with open('D:/Studium/WS22/Konfigurationen Datensets/Usable sequences/BestBatch/
                 if personPosY[f][l] < y_max and personPosY[f][l] > y_min and personPosX[f][l] > x_min and personPosX[f][l] < x_max:
                     sortedPositionX.append(personPosX[f][l])
                     sortedPositionY.append(personPosY[f][l])
-                    #
-                    #print(l, f, len(skeletons_within_a_frame),len(skeletons_within_a_frame[f]),len(skeletons_within_a_frame[f][l]))
-                    sorted_skeletons_within_a_frame.append(skeletons_within_a_frame[f][l])
-                    #
+                    sorted_skeletons_within_a_frame.append(skeletons_within_a_frame[f][l])          #numFrames x 32 x 3
                     frame_numbers.append(f)
 
         if len(frame_numbers) != 0:        
@@ -232,9 +354,15 @@ with open('D:/Studium/WS22/Konfigurationen Datensets/Usable sequences/BestBatch/
             positions.append(sortedPositionX)
             positions.append(sortedPositionY)
             allPositions.append(positions)
-            allSkeletons.append(sorted_skeletons_within_a_frame)
-            jump_in_arrays.append(jump_in_array_index)
-            
+            allSkeletons.append(sorted_skeletons_within_a_frame) #numPeople x numFramesOfPerson x 32 x 3
+            jump_in_arrays.append(jump_in_array_index)           #numPeople x 2 x numFramesOfPerson 
+    
+    #for b in range(len(allSkeletons)):
+        #print("allSkeletons:",len(allSkeletons),len(allSkeletons[b]),len(allSkeletons[b][0]))
+        #print("allPositions:",len(allPositions),len(allPositions[b]),len(allPositions[b][0]))
+    #    print(b, " ", allSkeletons[b][-1])
+    #    print(b, " ", allPositions[b][0][-1], allPositions[b][1][-1])
+    
     plt.legend()
     plt.show()    
 
@@ -336,7 +464,6 @@ with open('D:/Studium/WS22/Konfigurationen Datensets/Usable sequences/BestBatch/
 
 
     from mpl_toolkits import mplot3d
-    complete_data = []
     for l in range(len(id_position_pairs)):
         if id_position_pairs[l][1][0] == 0:                                                                                                             #only take routes that begin with the frame 0        
             if len(id_position_pairs[l][1])>2:
@@ -410,9 +537,10 @@ with open('D:/Studium/WS22/Konfigurationen Datensets/Usable sequences/BestBatch/
                 complete_skeleton_trajectory_z = []
                 for h in range(len(complete_skeleton_trajectory)):
                     for g in range(32):
-                        complete_skeleton_trajectory_x.append(complete_skeleton_trajectory[h][g][0])
-                        complete_skeleton_trajectory_y.append(complete_skeleton_trajectory[h][g][1])
-                        complete_skeleton_trajectory_z.append(complete_skeleton_trajectory[h][g][2])
+                        if complete_skeleton_trajectory[h][g][0] != 0 and complete_skeleton_trajectory[h][g][1] != 0 and complete_skeleton_trajectory[h][g][2] != 0:
+                            complete_skeleton_trajectory_x.append(complete_skeleton_trajectory[h][g][0])
+                            complete_skeleton_trajectory_y.append(complete_skeleton_trajectory[h][g][1])
+                            complete_skeleton_trajectory_z.append(complete_skeleton_trajectory[h][g][2])
 
                 #plt.scatter(complete_skeleton_trajectory[:][:][0],complete_skeleton_trajectory[:][:][1],complete_skeleton_trajectory[:][:][2],label=id_position_pairs[l][0])
                 #plt.scatter(complete_skeleton_trajectory_x,complete_skeleton_trajectory_y,complete_skeleton_trajectory_z,label=id_position_pairs[l][0])
@@ -420,7 +548,8 @@ with open('D:/Studium/WS22/Konfigurationen Datensets/Usable sequences/BestBatch/
                 ax.scatter(complete_skeleton_trajectory_x,complete_skeleton_trajectory_y,complete_skeleton_trajectory_z,label=id_position_pairs[l][0])
                 
                 plt.legend()
-                plt.show()  
+                plt.show() 
+                print("a") 
                 
                 
             else:
@@ -477,15 +606,21 @@ with open('D:/Studium/WS22/Konfigurationen Datensets/Usable sequences/BestBatch/
                 print("lengths og:",len(allSkeletons),len(allSkeletons[0]),len(allSkeletons[0][0]))
                 for h in range(len(complete_skeleton_trajectory)):
                     for g in range(32):
-                        complete_skeleton_trajectory_x.append(complete_skeleton_trajectory[h][g][0])
-                        complete_skeleton_trajectory_y.append(complete_skeleton_trajectory[h][g][1])
-                        complete_skeleton_trajectory_z.append(complete_skeleton_trajectory[h][g][2])
+                        if complete_skeleton_trajectory[h][g][0] != 0 and complete_skeleton_trajectory[h][g][1] != 0 and complete_skeleton_trajectory[h][g][2] != 0:
+                            complete_skeleton_trajectory_x.append(complete_skeleton_trajectory[h][g][0])
+                            complete_skeleton_trajectory_y.append(complete_skeleton_trajectory[h][g][1])
+                            complete_skeleton_trajectory_z.append(complete_skeleton_trajectory[h][g][2])
                 ax = plt.axes(projection ="3d")
                 ax.scatter3D(complete_skeleton_trajectory_x,complete_skeleton_trajectory_y,complete_skeleton_trajectory_z,label=id_position_pairs[l][0])
 
                 plt.legend()
                 plt.show()  
+                print("a")
+    #plt.legend()
+    #plt.show()  
+    #sequence_number += 1 
 
+def store_data(complete_data):
     all_id_data = []
     np_dict = dict()
     for every_id in range(len(complete_data)):
@@ -505,7 +640,17 @@ with open('D:/Studium/WS22/Konfigurationen Datensets/Usable sequences/BestBatch/
     sys.stdout=open("test2.txt","w")
     for i in row:
         print(data[i])
-    sys.stdout.close()   
+    sys.stdout.close()           
 
-    plt.legend()
-    plt.show()              
+
+def calc_number_of_skeletons():
+    pass
+def calc_skeleton_sequences():
+    pass
+
+if __name__ == "__main__":
+    totalNumberOfSequences = 150
+    for sequenceNumber in range(totalNumberOfSequences):
+        calc_number_of_skeletons()
+        calc_skeleton_sequences()
+    store_data()
